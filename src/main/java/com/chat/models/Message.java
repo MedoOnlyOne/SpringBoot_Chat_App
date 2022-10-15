@@ -1,5 +1,7 @@
 package com.chat.models;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.UUID;
@@ -18,11 +20,11 @@ public class Message {
     @Column(name = "message_text", columnDefinition = "TEXT")
     String text;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "message_user_id", referencedColumnName = "user_id")
     User user;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "message_chat_id", referencedColumnName = "chat_id")
     Chat chat;
 

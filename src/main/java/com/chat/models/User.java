@@ -1,6 +1,13 @@
 package com.chat.models;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.deser.std.UUIDDeserializer;
+import com.fasterxml.jackson.databind.ser.std.UUIDSerializer;
+
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -19,6 +26,9 @@ public class User {
 
     @Column(name = "email", length = 400)
     String email;
+
+    @OneToMany(mappedBy = "user")
+    List<Message> userMessages = new ArrayList<>();
 
     public UUID getId() {
         return id;

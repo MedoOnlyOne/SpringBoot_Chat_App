@@ -19,6 +19,9 @@ public class Chat {
     @Column(name = "chat_password", length = 64)
     String password;
 
+    @OneToMany(mappedBy = "chat")
+    List<Message> chatMessages = new ArrayList<>();
+
     @ManyToMany
     @JoinTable(name = "User_Chat",
             joinColumns = {@JoinColumn(name = "user_chat_chat_id", referencedColumnName = "chat_id")},
