@@ -1,15 +1,13 @@
 package com.chat.models;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class MessageSendReq {
     private String user;
     private String chat;
     private String text;
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    private LocalDateTime messageTime;
+//    private LocalDateTime messageTime;
 
     public String getUser() {
         return user;
@@ -33,13 +31,5 @@ public class MessageSendReq {
 
     public void setText(String text) {
         this.text = text;
-    }
-
-    public LocalDateTime getMessageTime() {
-        return messageTime;
-    }
-
-    public void setMessageTime(LocalDateTime messageTime) {
-        this.messageTime = messageTime;
     }
 }

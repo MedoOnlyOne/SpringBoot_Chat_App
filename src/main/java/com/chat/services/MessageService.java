@@ -27,8 +27,7 @@ public class MessageService {
     ChatRepository chatRepository;
 
     public Message sendMessage(MessageSendReq message) {
-        if ((message.getMessageTime().equals("") || message.getMessageTime() == null)
-            || (message.getText().equals("") || message.getText() == null)
+        if ((message.getText().equals("") || message.getText() == null)
             || (message.getChat().equals("") || message.getChat() == null)
             || (message.getUser().equals("") || message.getUser() == null)) {
             throw new IllegalStateException("Message text, time, sending user, destination chat are required");
@@ -42,13 +41,8 @@ public class MessageService {
             throw new IllegalStateException("Chat is not found");
 
         Message createdMessage = new Message();
-//        createdMessage.setMessageTime(LocalDateTime.parse(
-//                message.getMessageTime().toString(),
-//                DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
-//        ));
-        createdMessage.setMessageTime(message.getMessageTime());
 
-
+        createdMessage.setMessageTime(LocalDateTime.now());
         createdMessage.setChat(chat.get());
         createdMessage.setUser(user.get());
         createdMessage.setText(message.getText());
