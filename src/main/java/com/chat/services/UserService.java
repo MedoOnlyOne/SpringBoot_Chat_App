@@ -1,12 +1,12 @@
 package com.chat.services;
 
+import com.chat.dto.UserDto;
 import com.chat.models.User;
 import com.chat.repositories.UserRepository;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import javax.management.InstanceNotFoundException;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -15,17 +15,20 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
-    public User createUser(User user) {
+    @Autowired
+    private ModelMapper modelMapper;
+
+    public UserDto createUser(UserDto user) {
         if((user.getUsername().equals("") || user.getUsername() == null)
            || (user.getEmail().equals("") || user.getEmail() == null)
            || (user.getPassword().equals("") || user.getPassword() == null)){
             throw new IllegalStateException("Username, password, and email are required");
         }
 
-        return userRepository.save(user);
+        return this.userToDto(userRepository.save(this.dtoToUser(user)));
     }
 
-    public User updateUser(String id, User user)  {
+    public UserDto updateUser(String id, UserDto user)  {
         UUID userId = UUID.fromString(id);
         Optional<User> fetchedUserOptional = userRepository.findById(userId);
 
@@ -42,6 +45,18 @@ public class UserService {
         if (!user.getEmail().equals("") || user.getEmail() != null)
             fetchedUser.setEmail(user.getEmail());
 
-        return userRepository.save(fetchedUser);
+        return userToDto(userRepository.save(fetchedUser));
+    }
+
+    private UserDto userToDto (User user){
+        UserDto userDto = new UserDto();
+        userDto = modelMapper.map(user, UserDto.class);
+        return userDto;
+    }
+
+    private User dtoToUser(UserDto userDto){
+        User user = new User();
+        user = modelMapper.map(userDto, User.class);
+        return user;
     }
 }

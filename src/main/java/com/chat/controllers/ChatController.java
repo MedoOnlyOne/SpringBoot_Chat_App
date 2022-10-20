@@ -1,7 +1,8 @@
 package com.chat.controllers;
 
+import com.chat.dto.ChatDto;
 import com.chat.models.Chat;
-import com.chat.models.UsersToChatReq;
+import com.chat.dto.UsersToChatReq;
 import com.chat.services.ChatService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,12 +16,12 @@ public class ChatController {
     private ChatService chatService;
 
     @PostMapping(path = "/create")
-    public ResponseEntity<Chat> createChat(@RequestBody Chat chat){
-        return new ResponseEntity<Chat>(chatService.createChat(chat), HttpStatus.CREATED);
+    public ResponseEntity<ChatDto> createChat(@RequestBody ChatDto chat){
+        return new ResponseEntity<>(chatService.createChat(chat), HttpStatus.CREATED);
     }
 
     @PostMapping(path = "/add-users/{chat-id}")
-    public ResponseEntity<Chat> addUsers(@PathVariable("chat-id") String chatId, @RequestBody UsersToChatReq ids){
+    public ResponseEntity<ChatDto> addUsers(@PathVariable("chat-id") String chatId, @RequestBody UsersToChatReq ids){
         return new ResponseEntity<>(chatService.addUsers(chatId, ids.getUserIds()), HttpStatus.OK);
     }
 }

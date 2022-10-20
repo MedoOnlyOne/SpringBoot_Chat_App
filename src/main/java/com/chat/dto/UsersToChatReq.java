@@ -1,4 +1,4 @@
-package com.chat.models;
+package com.chat.dto;
 
 public class UsersToChatReq {
     String[] userIds;
