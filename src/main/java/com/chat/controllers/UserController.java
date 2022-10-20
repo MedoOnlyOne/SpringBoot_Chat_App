@@ -11,17 +11,17 @@ import org.springframework.web.server.ResponseStatusException;
 import javax.websocket.server.PathParam;
 
 @RestController
-@RequestMapping("/api/v1/user")
+@RequestMapping("/users")
 public class UserController {
     @Autowired
     private UserService userService;
 
-    @PostMapping(path = "/create")
+    @PostMapping
     public ResponseEntity<User> createUser(@RequestBody User user){
         return new ResponseEntity<>(userService.createUser(user), HttpStatus.CREATED);
     }
 
-    @PutMapping(path = "/update/{id}")
+    @PutMapping(path = "/{id}")
     public ResponseEntity<User> updateUser(@PathVariable("id") String userId, @RequestBody User user){
         return new ResponseEntity<>(userService.updateUser(userId, user), HttpStatus.OK);
     }
