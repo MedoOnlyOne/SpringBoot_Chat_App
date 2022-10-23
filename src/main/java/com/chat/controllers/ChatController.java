@@ -1,7 +1,6 @@
 package com.chat.controllers;
 
 import com.chat.dto.ChatDto;
-import com.chat.models.Chat;
 import com.chat.dto.UsersToChatReq;
 import com.chat.services.ChatService;
 import org.springframework.beans.factory.annotation.Autowired;

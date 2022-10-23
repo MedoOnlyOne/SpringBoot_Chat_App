@@ -11,9 +11,11 @@ public class UserDto {
     @JsonIgnore
     UUID id;
     String username;
+    @JsonIgnore
     String password;
     String email;
-    List<Message> userMessages = new ArrayList<>();
+    @JsonIgnore
+    List<MessageDto> userMessages = new ArrayList<>();
 
     public UUID getId() {
         return id;
@@ -47,11 +49,11 @@ public class UserDto {
         this.email = email;
     }
 
-    public List<Message> getUserMessages() {
+    public List<MessageDto> getUserMessages() {
         return userMessages;
     }
 
-    public void setUserMessages(List<Message> userMessages) {
+    public void setUserMessages(List<MessageDto> userMessages) {
         this.userMessages = userMessages;
     }
 }

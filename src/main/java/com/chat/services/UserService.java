@@ -1,9 +1,9 @@
 package com.chat.services;
 
 import com.chat.dto.UserDto;
+import com.chat.mapper.MyModelMapper;
 import com.chat.models.User;
 import com.chat.repositories.UserRepository;
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,7 +16,7 @@ public class UserService {
     private UserRepository userRepository;
 
     @Autowired
-    private ModelMapper modelMapper;
+    private MyModelMapper modelMapper;
 
     public UserDto createUser(UserDto user) {
         if((user.getUsername().equals("") || user.getUsername() == null)
@@ -50,13 +50,13 @@ public class UserService {
 
     private UserDto userToDto (User user){
         UserDto userDto = new UserDto();
-        userDto = modelMapper.map(user, UserDto.class);
+        userDto = modelMapper.mapper.map(user, UserDto.class);
         return userDto;
     }
 
     private User dtoToUser(UserDto userDto){
         User user = new User();
-        user = modelMapper.map(userDto, User.class);
+        user = modelMapper.mapper.map(userDto, User.class);
         return user;
     }
 }

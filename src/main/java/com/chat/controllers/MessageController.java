@@ -1,7 +1,6 @@
 package com.chat.controllers;
 
-import com.chat.models.Message;
-import com.chat.models.MessageSendReq;
+import com.chat.dto.MessageDto;
 import com.chat.services.MessageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,7 +17,7 @@ public class MessageController {
     private MessageService messageService;
 
     @PostMapping
-    public ResponseEntity<Message> sendMessage(@RequestBody MessageSendReq message){
+    public ResponseEntity<MessageDto> sendMessage(@RequestBody MessageDto message){
         return new ResponseEntity<>(messageService.sendMessage(message), HttpStatus.CREATED);
     }
 }

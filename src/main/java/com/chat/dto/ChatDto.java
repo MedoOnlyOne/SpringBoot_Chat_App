@@ -4,7 +4,6 @@ import com.chat.models.Message;
 import com.chat.models.User;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -13,9 +12,10 @@ public class ChatDto {
     @JsonIgnore
     UUID id;
     String topic;
+    @JsonIgnore
     String password;
-    List<Message> chatMessages = new ArrayList<>();
-    List<User> users = new ArrayList<>();
+    List<MessageDto> chatMessages = new ArrayList<>();
+    List<UserDto> users = new ArrayList<>();
 
     public UUID getId() {
         return id;
@@ -41,19 +41,19 @@ public class ChatDto {
         this.password = password;
     }
 
-    public List<Message> getChatMessages() {
+    public List<MessageDto> getChatMessages() {
         return chatMessages;
     }
 
-    public void setChatMessages(List<Message> chatMessages) {
+    public void setChatMessages(List<MessageDto> chatMessages) {
         this.chatMessages = chatMessages;
     }
 
-    public List<User> getUsers() {
+    public List<UserDto> getUsers() {
         return users;
     }
 
-    public void setUsers(List<User> users) {
+    public void setUsers(List<UserDto> users) {
         this.users = users;
     }
 }

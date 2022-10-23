@@ -1,16 +1,17 @@
 package com.chat.services;
 
 import com.chat.dto.ChatDto;
+import com.chat.mapper.MyModelMapper;
 import com.chat.models.Chat;
 import com.chat.models.User;
 import com.chat.repositories.ChatRepository;
 import com.chat.repositories.UserRepository;
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 import java.util.UUID;
+import java.util.logging.Logger;
 
 @Service
 public class ChatService {
@@ -21,7 +22,7 @@ public class ChatService {
     private UserRepository userRepository;
 
     @Autowired
-    private ModelMapper modelMapper;
+    private MyModelMapper modelMapper;
 
     public ChatDto createChat(ChatDto chat) {
         if ((chat.getTopic().equals("") || chat.getTopic() == null)
@@ -40,6 +41,7 @@ public class ChatService {
         }
 
         Chat chat = requiredChat.get();
+        System.out.println(chat.getChatMessages());
 
         for (String userId: userIds){
             Optional<User> user = userRepository.findById(UUID.fromString(userId));
@@ -57,13 +59,13 @@ public class ChatService {
 
     private ChatDto chatToDto(Chat chat){
         ChatDto chatDto = new ChatDto();
-        chatDto = modelMapper.map(chat, ChatDto.class);
+        chatDto = modelMapper.mapper.map(chat, ChatDto.class);
         return chatDto;
     }
 
     private Chat dtoToChat(ChatDto chatDto){
         Chat chat = new Chat();
-        chat = modelMapper.map(chatDto, Chat.class);
+        chat = modelMapper.mapper.map(chatDto, Chat.class);
         return chat;
     }
 }

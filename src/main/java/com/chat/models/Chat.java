@@ -53,6 +53,14 @@ public class Chat {
         this.password = password;
     }
 
+    public List<Message> getChatMessages() {
+        return chatMessages;
+    }
+
+    public void setChatMessages(List<Message> chatMessages) {
+        this.chatMessages = chatMessages;
+    }
+
     public List<User> getUsers() {
         return users;
     }
