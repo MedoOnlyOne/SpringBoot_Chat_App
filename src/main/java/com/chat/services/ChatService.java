@@ -1,6 +1,7 @@
 package com.chat.services;
 
 import com.chat.dto.ChatDto;
+import com.chat.exception.NotFound;
 import com.chat.mapper.MyModelMapper;
 import com.chat.models.Chat;
 import com.chat.models.User;
@@ -33,7 +34,7 @@ public class ChatService {
 
         Optional<Chat> requiredChat = chatRepository.findById(chatId);
         if (requiredChat.isEmpty()){
-            throw new IllegalStateException("Chat not found");
+            throw new NotFound("Chat not found");
         }
 
         Chat chat = requiredChat.get();

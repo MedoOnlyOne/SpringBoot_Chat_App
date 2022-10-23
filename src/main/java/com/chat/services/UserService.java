@@ -1,6 +1,7 @@
 package com.chat.services;
 
 import com.chat.dto.UserDto;
+import com.chat.exception.NotFound;
 import com.chat.mapper.MyModelMapper;
 import com.chat.models.User;
 import com.chat.repositories.UserRepository;
@@ -27,7 +28,7 @@ public class UserService {
         Optional<User> fetchedUserOptional = userRepository.findById(userId);
 
         if(fetchedUserOptional.isEmpty()){
-            throw new IllegalStateException("No such user");
+            throw new NotFound("User not found");
         }
 
         User fetchedUser = fetchedUserOptional.get();

@@ -1,5 +1,7 @@
 package com.chat.services;
 
+import com.chat.exception.NotFound;
+import com.chat.exception.UserIsNotInChat;
 import com.chat.mapper.MyModelMapper;
 import com.chat.models.Chat;
 import com.chat.models.Message;
@@ -13,7 +15,6 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.Optional;
-import java.util.UUID;
 
 @Service
 public class MessageService {
@@ -30,14 +31,16 @@ public class MessageService {
     MyModelMapper modelMapper;
     public MessageDto sendMessage(MessageDto message) {
         Optional<User> user = userRepository.findById(message.getUser());
-        if (user.isEmpty())
-            throw new IllegalStateException("User is not found");
-
         Optional<Chat> chat = chatRepository.findById(message.getChat());
-        if (chat.isEmpty())
-            throw new IllegalStateException("Chat is not found");
+
+        if (!user.isPresent())
+            throw new NotFound("User not found");
+
+        if (!chat.isPresent())
+            throw new NotFound("Chat not found");
+
         if(!chat.get().getUsers().contains(user.get())){
-            throw new IllegalStateException("This user does not join this chat.");
+            throw new UserIsNotInChat();
         }
         Message createdMessage = new Message();
 
