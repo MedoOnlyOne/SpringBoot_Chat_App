@@ -19,12 +19,6 @@ public class UserService {
     private MyModelMapper modelMapper;
 
     public UserDto createUser(UserDto user) {
-        if((user.getUsername().equals("") || user.getUsername() == null)
-           || (user.getEmail().equals("") || user.getEmail() == null)
-           || (user.getPassword().equals("") || user.getPassword() == null)){
-            throw new IllegalStateException("Username, password, and email are required");
-        }
-
         return this.userToDto(userRepository.save(this.dtoToUser(user)));
     }
 
@@ -37,13 +31,9 @@ public class UserService {
         }
 
         User fetchedUser = fetchedUserOptional.get();
-
-        if (!user.getUsername().equals("") || user.getUsername() != null)
-            fetchedUser.setUsername(user.getUsername());
-        if (!user.getPassword().equals("") || user.getPassword() != null)
-            fetchedUser.setPassword(user.getPassword());
-        if (!user.getEmail().equals("") || user.getEmail() != null)
-            fetchedUser.setEmail(user.getEmail());
+        fetchedUser.setUsername(user.getUsername());
+        fetchedUser.setPassword(user.getPassword());
+        fetchedUser.setEmail(user.getEmail());
 
         return userToDto(userRepository.save(fetchedUser));
     }

@@ -25,14 +25,10 @@ public class ChatService {
     private MyModelMapper modelMapper;
 
     public ChatDto createChat(ChatDto chat) {
-        if ((chat.getTopic().equals("") || chat.getTopic() == null)
-            || (chat.getPassword().equals("") || chat.getPassword() == null)) {
-            throw new IllegalStateException("Topic and password are required");
-        }
         return this.chatToDto(chatRepository.save(this.dtoToChat(chat)));
     }
 
-    public ChatDto addUsers(String id, String[] userIds) {
+    public ChatDto addUsers(String id, UUID[] userIds) {
         UUID chatId = UUID.fromString(id);
 
         Optional<Chat> requiredChat = chatRepository.findById(chatId);
@@ -43,8 +39,8 @@ public class ChatService {
         Chat chat = requiredChat.get();
         System.out.println(chat.getChatMessages());
 
-        for (String userId: userIds){
-            Optional<User> user = userRepository.findById(UUID.fromString(userId));
+        for (UUID userId: userIds){
+            Optional<User> user = userRepository.findById(userId);
 
             // If no such user, or user is already in the chat
             // got to the next user to add

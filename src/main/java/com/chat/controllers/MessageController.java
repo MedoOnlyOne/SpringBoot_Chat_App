@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
+
 @RestController
 @RequestMapping("/messages")
 public class MessageController {
@@ -17,7 +19,7 @@ public class MessageController {
     private MessageService messageService;
 
     @PostMapping
-    public ResponseEntity<MessageDto> sendMessage(@RequestBody MessageDto message){
+    public ResponseEntity<MessageDto> sendMessage(@Valid @RequestBody MessageDto message){
         return new ResponseEntity<>(messageService.sendMessage(message), HttpStatus.CREATED);
     }
 }

@@ -29,11 +29,6 @@ public class MessageService {
     @Autowired
     MyModelMapper modelMapper;
     public MessageDto sendMessage(MessageDto message) {
-        if ((message.getText().equals("") || message.getText() == null)
-            || (message.getChat().equals("") || message.getChat() == null)
-            || (message.getUser().equals("") || message.getUser() == null)) {
-            throw new IllegalStateException("Message text, time, sending user, destination chat are required");
-        }
         Optional<User> user = userRepository.findById(message.getUser());
         if (user.isEmpty())
             throw new IllegalStateException("User is not found");

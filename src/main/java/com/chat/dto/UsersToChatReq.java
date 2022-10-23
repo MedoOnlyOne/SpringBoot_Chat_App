@@ -1,13 +1,15 @@
 package com.chat.dto;
 
-public class UsersToChatReq {
-    String[] userIds;
+import java.util.UUID;
 
-    public String[] getUserIds() {
+public class UsersToChatReq {
+    UUID[] userIds;
+
+    public UUID[] getUserIds() {
         return userIds;
     }
 
-    public void setUserIds(String[] userIds) {
+    public void setUserIds(UUID[] userIds) {
         this.userIds = userIds;
     }
 }
