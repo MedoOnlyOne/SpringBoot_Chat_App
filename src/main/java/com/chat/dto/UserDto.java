@@ -12,7 +12,6 @@ import java.util.List;
 import java.util.UUID;
 
 public class UserDto {
-    @JsonIgnore
     UUID id;
     @NotBlank(message = "Username is required")
     String username;

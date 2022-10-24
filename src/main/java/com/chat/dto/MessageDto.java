@@ -8,7 +8,6 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 public class MessageDto {
-    @JsonIgnore
     UUID id;
     LocalDateTime messageTime;
     @NotBlank(message = "Message's text is required")

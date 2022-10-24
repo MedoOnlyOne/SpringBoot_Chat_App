@@ -30,6 +30,9 @@ public class User {
     @OneToMany(mappedBy = "user")
     List<Message> userMessages = new ArrayList<>();
 
+    @ManyToMany(mappedBy = "users")
+    List<Chat> userChats = new ArrayList<>();
+
     public UUID getId() {
         return id;
     }
@@ -60,6 +63,22 @@ public class User {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public List<Message> getUserMessages() {
+        return userMessages;
+    }
+
+    public void setUserMessages(List<Message> userMessages) {
+        this.userMessages = userMessages;
+    }
+
+    public List<Chat> getUserChats() {
+        return userChats;
+    }
+
+    public void setUserChats(List<Chat> userChats) {
+        this.userChats = userChats;
     }
 
     @Override

@@ -1,5 +1,6 @@
 package com.chat.services;
 
+import com.chat.dto.ChatDto;
 import com.chat.dto.UserDto;
 import com.chat.exception.NotFound;
 import com.chat.mapper.MyModelMapper;
@@ -8,6 +9,8 @@ import com.chat.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -15,6 +18,9 @@ import java.util.UUID;
 public class UserService {
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    ChatService chatService;
 
     @Autowired
     private MyModelMapper modelMapper;
@@ -39,13 +45,41 @@ public class UserService {
         return userToDto(userRepository.save(fetchedUser));
     }
 
-    private UserDto userToDto (User user){
+    public List<UserDto> getUsers() {
+        List<User> users = userRepository.findAll();
+        List<UserDto> userDtos = new ArrayList<>();
+
+        users.forEach((user) -> {
+            userDtos.add(this.userToDto(user));
+        });
+        return userDtos;
+    }
+
+    public UserDto getUser(String userId) {
+        Optional<User> user = userRepository.findById(UUID.fromString(userId));
+        if (user.isEmpty())
+            throw new NotFound("User not found");
+        return this.userToDto(user.get());
+    }
+
+    public List<ChatDto> getUserChats(String userId) {
+        Optional<User> user = userRepository.findById(UUID.fromString(userId));
+        if (user.isEmpty())
+            throw new NotFound("User not found");
+        List<ChatDto> userChats = new ArrayList<>();
+
+        user.get().getUserChats().forEach((chat) -> {
+            userChats.add(chatService.chatToDto(chat));
+        });
+        return userChats;
+    }
+    public UserDto userToDto (User user){
         UserDto userDto = new UserDto();
         userDto = modelMapper.mapper.map(user, UserDto.class);
         return userDto;
     }
 
-    private User dtoToUser(UserDto userDto){
+    public User dtoToUser(UserDto userDto){
         User user = new User();
         user = modelMapper.mapper.map(userDto, User.class);
         return user;

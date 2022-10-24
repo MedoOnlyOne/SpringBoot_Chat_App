@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class MessageService {
@@ -52,7 +53,14 @@ public class MessageService {
         return this.messageToDto(messageRepository.save(createdMessage));
     }
 
-    private MessageDto messageToDto(Message message){
+    public MessageDto getMessage(String messageId) {
+        Optional<Message> message = messageRepository.findById(UUID.fromString(messageId));
+        if (message.isEmpty())
+            throw new NotFound("Message not found");
+        return this.messageToDto(message.get());
+    }
+
+    public MessageDto messageToDto(Message message){
         MessageDto messageDto = new MessageDto();
         messageDto = modelMapper.mapper.map(message, MessageDto.class);
         return messageDto;

@@ -11,7 +11,6 @@ import java.util.List;
 import java.util.UUID;
 
 public class ChatDto {
-    @JsonIgnore
     UUID id;
     @NotBlank(message = "Message's topic is required")
     String topic;
