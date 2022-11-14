@@ -2,7 +2,10 @@ package com.chat.services;
 
 import com.chat.dto.ChatDto;
 import com.chat.dto.UserDto;
+import com.chat.dto.UserLoginDto;
 import com.chat.exception.NotFound;
+import com.chat.exception.PasswordIncorrect;
+import com.chat.exception.UsernameIsTaken;
 import com.chat.mapper.MyModelMapper;
 import com.chat.models.User;
 import com.chat.repositories.UserRepository;
@@ -26,7 +29,20 @@ public class UserService {
     private MyModelMapper modelMapper;
 
     public UserDto createUser(UserDto user) {
+        Optional<User> userLoaded = userRepository.findByUsername(user.getUsername());
+        if(userLoaded.isPresent())
+            throw new UsernameIsTaken();
+
         return this.userToDto(userRepository.save(this.dtoToUser(user)));
+    }
+
+    public UserDto loginUser(UserLoginDto user) {
+        Optional<User> userLoaded = userRepository.findByUsername(user.getUsername());
+        if(!userLoaded.isPresent())
+            throw new NotFound("User not found");
+        if(user.getPassword().equals(userLoaded.get().getPassword()))
+            return this.userToDto(userLoaded.get());
+        throw new PasswordIncorrect();
     }
 
     public UserDto updateUser(String id, UserDto user)  {

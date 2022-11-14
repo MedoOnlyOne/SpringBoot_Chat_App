@@ -2,6 +2,7 @@ package com.chat.controllers;
 
 import com.chat.dto.ChatDto;
 import com.chat.dto.UserDto;
+import com.chat.dto.UserLoginDto;
 import com.chat.models.Chat;
 import com.chat.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,7 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
+@CrossOrigin("*")
 @RequestMapping("/users")
 public class UserController {
     @Autowired
@@ -21,6 +23,11 @@ public class UserController {
     @PostMapping
     public ResponseEntity<UserDto> createUser(@Valid @RequestBody UserDto user){
         return new ResponseEntity<>(userService.createUser(user), HttpStatus.CREATED);
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<UserDto> loginUser(@Valid @RequestBody UserLoginDto user){
+        return new ResponseEntity<>(userService.loginUser(user), HttpStatus.CREATED);
     }
 
     @PutMapping(path = "/{id}")
